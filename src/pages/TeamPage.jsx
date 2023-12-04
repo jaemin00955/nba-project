@@ -13,16 +13,16 @@ const func = async () => {
 
 function TeamPage() {
   const params = useParams();
-  func();
+  // func();
   // ScheduleData();
   // const url =
   //   'https://r6aaf3ejke.execute-api.ap-northeast-2.amazonaws.com/staging/nba';
   // axios.get(url);
-  // API.post('nbaApi', '/synergy', {
-  //   body: {
-  //     teamId: 1610612737,
-  //   },
-  // });
+  API.post('nbaApi', '/synergy', {
+    body: {
+      teamId: 1610612737,
+    },
+  });
   return (
     <>
       <Box bg="black" w="100%" p={8} color="white">
