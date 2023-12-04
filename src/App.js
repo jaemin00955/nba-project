@@ -11,31 +11,47 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { Logo } from './Logo';
+import { Amplify } from 'aws-amplify';
+import awsmobile from "./aws-exports"
+
+// import amplifyconfig from './amplifyconfiguration.json';
+
+
+// import { Authenticator } from '@aws-amplify/ui-react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import { RecoilDevTools } from "recoil-toolkit";
+import SchedulePage from './pages/SchedulePage';
+import TeamPage from './pages/TeamPage';
+import TeamInfo from './pages/TeamInfo';
+
+// Amplify.configure(amplifyconfig);
+Amplify.configure(awsmobile)
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+    <ChakraProvider>
+  <QueryClientProvider client={queryClient}>
+  {/* <ColorModeSwitcher justifySelf="flex-end" /> */}
+    <BrowserRouter>
+      <RecoilRoot>
+        <RecoilDevTools forceSerialize={false} />
+        <Routes>
+          {/* 나중에 routes.js파일 만들어서 path들 전역변수로 바꿔주기 */}
+          <Route path="/" element={<SchedulePage />} />
+          <Route path="/:abbrev" element={<TeamPage />} />
+          <Route path="/:abbrev/info" element={<TeamInfo />} />
+        </Routes>
+      </RecoilRoot>
+    </BrowserRouter>
+  <ReactQueryDevtools/>
+</QueryClientProvider>
+</ChakraProvider>
+   
   );
 }
 

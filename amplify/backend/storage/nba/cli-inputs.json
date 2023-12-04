@@ -1,0 +1,10 @@
+{
+  "resourceName": "nba",
+  "tableName": "nba",
+  "partitionKey": {
+    "fieldName": "teamID",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
